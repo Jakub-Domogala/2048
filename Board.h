@@ -7,7 +7,7 @@ public:
 	~Board() = default;
 
 	void play();
-	void move();
+	bool move();
 	void spawn();
 	void print();
 	bool check_if_lost();

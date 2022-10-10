@@ -18,11 +18,12 @@ Board::Board(int size)
 void Board::play()
 {
 	int moves = 0;
-	std::cout << "Your available moves are: \n\
+	std::cout << "Your available moves are:\n\
 W - up\n\
 S - down\n\
 D - right\n\
 A - left\n\
+Q - exit\n\
 normal and capitals accepted\n";
 	system("pause");
 	do 
@@ -30,7 +31,7 @@ normal and capitals accepted\n";
 		system("CLS");
 		spawn();
 		print();
-		move();
+		if (!move()) break;
 	} while (!check_if_lost());
 	system("CLS");
 	std::cout << "\nYOU LOST\n";
@@ -38,7 +39,7 @@ normal and capitals accepted\n";
 	system("pause");
 }
 
-void Board::move()
+bool Board::move()
 {	
 	char key;
 
@@ -88,7 +89,7 @@ void Board::move()
 			}
 
 		}
-		break;
+		return true;
 
 		// DOWN
 	case 'S':
@@ -126,7 +127,7 @@ void Board::move()
 				}
 			}
 		}
-		break;
+		return true;
 
 		// LEFT
 	case'A':
@@ -164,7 +165,7 @@ void Board::move()
 				}
 			}
 		}
-		break;
+		return true;
 
 		// RIGHT
 	case 'D':
@@ -202,8 +203,14 @@ void Board::move()
 				}
 			}
 		}
+		return true;
+	case 'q':
+	case 'Q':
+		return false;
+
 		break;
 	}
+	return true;
 }
 
 void Board::spawn()
@@ -238,16 +245,22 @@ void Board::print()
 {
 	std::cout << "Score: " << score;
 	for (int y = board_size-1; y >= 0; y--) {
-		std::cout << "    \n |||";
+		std::cout << "    \n |";
 		for (int x = 0; x < board_size; x++) {
+			std::cout.width(4);
 			if (quango[x][y] > 0) {
-				std::cout << quango[x][y] << "\t";
+				
+				std::cout << quango[x][y];
+				
 			}
 			else {
-				std::cout << "\t";
+				std::cout << "";
 			}
+
+			std::cout << "|";
 		}
 	}
+	std::cout << "\n";
 }
 
 bool Board::check_if_lost()
